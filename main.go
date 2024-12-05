@@ -21,7 +21,7 @@ func main() {
 	}
 	s := &server.Server{
 		Config: http.Server{
-			Addr:         ":1443",
+			Addr:         ":8443",
 			TLSConfig:    &tls_cfg,
 			TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
 		},
@@ -29,8 +29,9 @@ func main() {
 
 	s.HandleRoutes()
 
-	log.Println("Listening on https://localhost:1443/")
+	log.Println("Listening on https://localhost:8443/")
 	if err := s.Config.ListenAndServeTLS("./certs/server.crt", "./certs/server.key"); err != nil {
+		log.Println(err)
 		log.Fatal("Can't establish connection")
 	}
 }
