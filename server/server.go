@@ -1,7 +1,7 @@
 package server
 
 import (
-	m "hephaistos/middleware"
+	routes "hephaistos/server/routes"
 	"net/http"
 )
 
@@ -10,5 +10,7 @@ type Server struct {
 }
 
 func (s *Server) HandleRoutes() {
-	http.HandleFunc("/", m.DefaultPage)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.HandleFunc("/", routes.Home)
+	http.HandleFunc("/FDS", routes.FDS)
 }
