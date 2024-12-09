@@ -34,7 +34,6 @@ func main() {
 			TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
 		},
 	}
-	s.Config.TLSConfig.NextProtos = append([]string{"h2", "http/1.1"}, s.Config.TLSConfig.NextProtos...)
 	s.HandleRoutes()
 
 	log.Println("Listening on https://localhost:8443/")
