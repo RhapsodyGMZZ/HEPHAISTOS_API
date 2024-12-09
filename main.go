@@ -26,7 +26,11 @@ func main() {
 		},
 	}
 	s.HandleRoutes()
-	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+	go func() {
+		if err := http.ListenAndServe(":http", certManager.HTTPHandler(nil)); err != nil {
+			log.Fatal(err)
+		}
+	}()
 	log.Println("Listening on https://localhost:8443/")
 	if err := s.Config.ListenAndServeTLS("", ""); err != nil {
 		log.Println(err)
