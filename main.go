@@ -37,7 +37,8 @@ func main() {
 	s.HandleRoutes()
 
 	log.Println("Listening on https://localhost:8443/")
-	if err := s.Config.ListenAndServeTLS("./certs/server.crt", "./certs/server.key"); err != nil {
+	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+	if err := s.Config.ListenAndServeTLS("", ""); err != nil {
 		log.Println(err)
 		log.Fatal("Can't establish connection")
 	}
