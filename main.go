@@ -5,16 +5,9 @@ import (
 	"hephaistos/server"
 	"log"
 	"net/http"
-
-	"golang.org/x/crypto/acme/autocert"
 )
 
 func main() {
-	certManager := autocert.Manager{
-		Prompt:     autocert.AcceptTOS,
-		HostPolicy: autocert.HostWhitelist("hephaistos.hafa.fr"), //Your domain here
-		Cache:      autocert.DirCache("./certs"),                 //Folder for storing certificates
-	}
 	tls_cfg := tls.Config{
 		MinVersion:               tls.VersionTLS12,
 		CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
@@ -25,7 +18,6 @@ func main() {
 			tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
 			tls.TLS_RSA_WITH_AES_256_CBC_SHA,
 		},
-		GetCertificate: certManager.GetCertificate,
 	}
 	s := &server.Server{
 		Config: http.Server{
@@ -37,8 +29,7 @@ func main() {
 	s.HandleRoutes()
 
 	log.Println("Listening on https://localhost:8443/")
-	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
-	if err := s.Config.ListenAndServeTLS("", ""); err != nil {
+	if err := s.Config.ListenAndServeTLS("./certs/server.crt", "./certs/server.key"); err != nil {
 		log.Println(err)
 		log.Fatal("Can't establish connection")
 	}
