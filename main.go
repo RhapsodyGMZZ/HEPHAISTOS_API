@@ -29,6 +29,7 @@ func main() {
 	s.HandleRoutes()
 
 	log.Println("Listening on https://localhost:8443/")
+	//	if err := s.Config.ListenAndServeTLS("/etc/letsencrypt/live/hephaistos.hafa.fr/fullchain.pem", "/etc/letsencrypt/live/hephaistos.hafa.fr/privkey.pem"); err != nil {
 	if err := s.Config.ListenAndServeTLS("./certs/server.crt", "./certs/server.key"); err != nil {
 		log.Println(err)
 		log.Fatal("Can't establish connection")
