@@ -9,7 +9,7 @@ import (
 const _BASE_DIR = "templates/"
 
 func RenderHtml(w http.ResponseWriter, file_name string) {
-	tmpl, err := template.ParseFiles(_BASE_DIR + file_name + ".html")
+	tmpl, err := template.ParseFiles(_BASE_DIR+file_name+".html", _BASE_DIR+"base.html")
 	if err != nil {
 		log.Println(err)
 		log.Println("Can't render html")
@@ -17,5 +17,5 @@ func RenderHtml(w http.ResponseWriter, file_name string) {
 		RenderHtml(w, "error/500")
 		return
 	}
-	tmpl.Execute(w, nil)
+	tmpl.ExecuteTemplate(w, "base", nil)
 }

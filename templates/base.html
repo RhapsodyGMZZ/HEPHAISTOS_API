@@ -1,0 +1,27 @@
+{{define "base"}}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/base.css">
+    {{template "extra_css"}}
+    <title>Accueil</title>
+</head>
+
+<body>
+        <nav class="header">
+            <h1>Hephaistos</h1>
+        </nav>
+        <div class="wrapper">
+            <div class="sidenav">
+                <a href="/FDS">Chercher une FDS</a>
+                <a href="/FT">Chercher une FT</a>
+            </div>
+            {{template "content"}}
+        </div>
+</body>
+
+</html>
+{{end}}

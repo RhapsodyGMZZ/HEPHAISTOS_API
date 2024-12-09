@@ -19,8 +19,12 @@ func FDS(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cp := r.URL.Query().Get("code_racine")
-	file_name := get_fds(cp)
-	http.ServeFile(w, r, _BASE_DIR+"FDS/"+file_name)
+	if cp != "" {
+		file_name := get_fds(cp)
+		http.ServeFile(w, r, _BASE_DIR+"FDS/"+file_name)
+	} else {
+		utils.RenderHtml(w, "fds")
+	}
 }
 
 func get_fds(cp string) (file_name string) {
